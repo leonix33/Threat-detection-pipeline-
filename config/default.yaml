@@ -1,0 +1,50 @@
+# Default TAXII Server Configuration
+# For production use, copy this to config/local.yaml and customize
+
+taxii_servers:
+  # MITRE ATT&CK TAXII 2.1 Server (Public)
+  - name: "mitre_attack"
+    url: "https://cti-taxii.mitre.org/taxii/"
+    api_root: "stix"
+    collections:
+      - "enterprise-attack"
+    discovery_url: "https://cti-taxii.mitre.org/taxii/"
+    enabled: true
+    auth_required: false
+  
+  # Example authenticated server (disabled by default)
+  - name: "custom_feed"
+    url: "https://example.taxii-server.com/taxii/"
+    api_root: "api1"
+    collections:
+      - "threat-intel"
+    discovery_url: "https://example.taxii-server.com/taxii/"
+    enabled: false
+    auth_required: true
+    # Set via environment variables: TAXII_USERNAME, TAXII_PASSWORD
+
+# Database Configuration
+database:
+  type: "sqlite"
+  path: "threat_intel.db"
+
+# Enrichment Settings
+enrichment:
+  # Enable/disable specific enrichment sources
+  geo_ip: true
+  reputation_check: false  # Requires external API keys
+  
+# Analysis Settings
+analysis:
+  # Days to look back for analysis
+  lookback_days: 7
+  # Confidence threshold for indicators (0-100)
+  min_confidence: 50
+
+# Export Settings
+export:
+  formats:
+    - "json"
+    - "csv"
+    - "stix"
+  default_format: "json"
