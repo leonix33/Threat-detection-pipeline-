@@ -1,0 +1,93 @@
+# Example: Custom TAXII Server Configuration
+# Copy this file to config/local.yaml and customize as needed
+
+taxii_servers:
+  # MITRE ATT&CK TAXII Server (enabled by default)
+  - name: "mitre_attack"
+    url: "https://cti-taxii.mitre.org/taxii/"
+    api_root: "stix"
+    collections:
+      - "enterprise-attack"
+      # - "mobile-attack"
+      # - "ics-attack"
+    discovery_url: "https://cti-taxii.mitre.org/taxii/"
+    enabled: true
+    auth_required: false
+  
+  # Example: AlienVault OTX (requires API key)
+  # - name: "alienvault_otx"
+  #   url: "https://otx.alienvault.com/taxii/"
+  #   api_root: "collections"
+  #   collections:
+  #     - "default"
+  #   discovery_url: "https://otx.alienvault.com/taxii/discovery/"
+  #   enabled: false
+  #   auth_required: true
+  #   # Set TAXII_USERNAME and TAXII_PASSWORD environment variables
+  
+  # Example: Commercial Threat Feed
+  # - name: "commercial_feed"
+  #   url: "https://threat-feed.example.com/taxii/"
+  #   api_root: "api/v1"
+  #   collections:
+  #     - "premium-indicators"
+  #   discovery_url: "https://threat-feed.example.com/taxii/discovery"
+  #   enabled: false
+  #   auth_required: true
+
+# Database Configuration
+database:
+  type: "sqlite"
+  path: "threat_intel.db"
+  # For production, consider PostgreSQL:
+  # type: "postgresql"
+  # host: "localhost"
+  # port: 5432
+  # database: "threat_intel"
+  # user: "ti_user"
+  # password: "secure_password"
+
+# Enrichment Settings
+enrichment:
+  # Enable/disable specific enrichment sources
+  geo_ip: true
+  reputation_check: false  # Set to true when API keys are configured
+  
+  # External API configuration (optional)
+  # virustotal:
+  #   api_key: "YOUR_VT_API_KEY"
+  #   enabled: false
+  # abuseipdb:
+  #   api_key: "YOUR_ABUSEIPDB_API_KEY"
+  #   enabled: false
+
+# Analysis Settings
+analysis:
+  # Days to look back for analysis
+  lookback_days: 7
+  # Confidence threshold for indicators (0-100)
+  min_confidence: 50
+  # Severity levels to include in reports
+  severity_levels:
+    - "high"
+    - "medium"
+    - "low"
+
+# Export Settings
+export:
+  formats:
+    - "json"
+    - "csv"
+    - "stix"
+  default_format: "json"
+  # Include enrichment data in exports
+  include_enrichments: true
+  # Maximum indicators per export
+  max_indicators: 10000
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: "threat_intel.log"
+  max_size_mb: 10
+  backup_count: 5
