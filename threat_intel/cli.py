@@ -26,6 +26,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Constants for CSV export
+CSV_EXPORT_FIELDS = ['indicator_id', 'type', 'value', 'source', 'confidence', 
+                     'severity', 'labels', 'description', 'first_seen', 'last_seen']
+
 
 @click.group()
 @click.option('--config', type=click.Path(exists=True), help='Path to custom config file')
@@ -176,14 +180,10 @@ def search(ctx, ioc, ioc_type, source, confidence, limit, output_format):
     
     elif output_format == 'csv':
         if results:
-            # Get all unique keys
-            keys = ['indicator_id', 'type', 'value', 'source', 'confidence', 
-                   'severity', 'first_seen', 'description']
-            
-            writer = csv.DictWriter(click.get_text_stream('stdout'), fieldnames=keys)
+            writer = csv.DictWriter(click.get_text_stream('stdout'), fieldnames=CSV_EXPORT_FIELDS)
             writer.writeheader()
             for result in results:
-                row = {k: result.get(k, '') for k in keys}
+                row = {k: result.get(k, '') for k in CSV_EXPORT_FIELDS}
                 writer.writerow(row)
     
     else:  # table format
@@ -246,14 +246,11 @@ def export(ctx, output, output_format, ioc_type, source, confidence, limit):
     
     elif output_format == 'csv':
         if results:
-            keys = ['indicator_id', 'type', 'value', 'source', 'confidence', 
-                   'severity', 'labels', 'description', 'first_seen', 'last_seen']
-            
             with open(output_path, 'w', newline='') as f:
-                writer = csv.DictWriter(f, fieldnames=keys)
+                writer = csv.DictWriter(f, fieldnames=CSV_EXPORT_FIELDS)
                 writer.writeheader()
                 for result in results:
-                    row = {k: result.get(k, '') for k in keys}
+                    row = {k: result.get(k, '') for k in CSV_EXPORT_FIELDS}
                     # Convert lists to strings
                     if isinstance(row.get('labels'), list):
                         row['labels'] = ','.join(row['labels'])

@@ -67,8 +67,8 @@ MOCK_INDICATORS = [
     {
         'indicator_id': 'indicator--31234567-89ab-cdef-0123-456789abcdef',
         'type': 'indicator',
-        'value': 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6',
-        'pattern': "[file:hashes.MD5 = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6']",
+        'value': 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6',
+        'pattern': "[file:hashes.MD5 = 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6']",
         'source': 'demo_feed',
         'description': 'Ransomware binary MD5 hash',
         'labels': ['ransomware', 'malware'],

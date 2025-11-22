@@ -3,6 +3,7 @@
 import re
 from typing import Dict, Any, List, Optional
 import logging
+import ipaddress
 
 logger = logging.getLogger(__name__)
 
@@ -231,30 +232,13 @@ class IndicatorEnricher:
         indicator['labels'] = list(set(existing_labels + tags))
     
     def _is_private_ip(self, ip: str) -> bool:
-        """Check if IP is in private range."""
+        """Check if IP is in private range using ipaddress module."""
         try:
-            parts = [int(p) for p in ip.split('.')]
-            
-            # 10.0.0.0/8
-            if parts[0] == 10:
-                return True
-            
-            # 172.16.0.0/12
-            if parts[0] == 172 and 16 <= parts[1] <= 31:
-                return True
-            
-            # 192.168.0.0/16
-            if parts[0] == 192 and parts[1] == 168:
-                return True
-            
-            # 127.0.0.0/8 (loopback)
-            if parts[0] == 127:
-                return True
-        
-        except:
-            pass
-        
-        return False
+            ip_obj = ipaddress.ip_address(ip)
+            return ip_obj.is_private or ip_obj.is_loopback
+        except ValueError:
+            # Invalid IP address format
+            return False
     
     def _is_suspicious_domain(self, domain: str) -> bool:
         """Check for suspicious domain patterns."""

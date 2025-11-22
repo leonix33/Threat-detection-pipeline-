@@ -43,7 +43,8 @@ class IndicatorNormalizer:
             if iocs:
                 # If we found specific IOCs, update the indicator
                 normalized['extracted_iocs'] = iocs
-                # Use the first IOC as the main value if not already set
+                # Use the first IOC as the main value if pattern is the current value
+                # This handles cases where STIX patterns are used as the value field
                 if not normalized.get('value') or normalized['value'] == normalized.get('pattern'):
                     normalized['value'] = iocs[0]['value']
                     normalized['ioc_type'] = iocs[0]['type']
