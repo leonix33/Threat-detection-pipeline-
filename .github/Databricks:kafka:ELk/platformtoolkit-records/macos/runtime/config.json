@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "platform": "macOS",
+  "autoUpdate": true,
+  "checkUpdateOnStartup": true,
+  "packageManagers": {
+    "homebrew": {
+      "enabled": true,
+      "autoCleanup": true
+    },
+    "conda": {
+      "enabled": true,
+      "variant": "miniconda"
+    },
+    "nvm": {
+      "enabled": true,
+      "autoInstallLTS": true
+    },
+    "pyenv": {
+      "enabled": true,
+      "autoSetGlobal": false
+    },
+    "rvm": {
+      "enabled": false,
+      "note": "Only install if Ruby development is needed"
+    }
+  },
+  "tools": {
+    "core": {
+      "python": true,
+      "git": true,
+      "node": true,
+      "azureCli": true,
+      "terraform": true,
+      "kubectl": true,
+      "helm": true,
+      "docker": true
+    },
+    "data": {
+      "databricks": true,
+      "jq": true,
+      "yq": true
+    },
+    "utilities": {
+      "curl": true,
+      "wget": true,
+      "htop": true,
+      "tree": true,
+      "tmux": true,
+      "fzf": true,
+      "ripgrep": true,
+      "bat": true,
+      "exa": true,
+      "fd": true
+    },
+    "applications": {
+      "vscode": true,
+      "dockerDesktop": true,
+      "postman": true,
+      "iterm2": true
+    }
+  },
+  "shell": {
+    "enhanceZsh": true,
+    "installOhMyZsh": true,
+    "addAliases": true,
+    "autosuggestions": true,
+    "syntaxHighlighting": true
+  },
+  "paths": {
+    "toolsDirectory": "~/Tools",
+    "logsDirectory": "~/Tools/logs",
+    "configDirectory": "~/Tools/config"
+  },
+  "features": {
+    "generateSummary": true,
+    "enableLogging": false,
+    "verboseOutput": false,
+    "dryRunMode": false
+  }
+}

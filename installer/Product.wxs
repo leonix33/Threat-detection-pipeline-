@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Product
+    Id="*"
+    Name="Platform Engineer Toolkit"
+    Language="1033"
+    Version="1.0.0"
+    Manufacturer="Leonix Engineering"
+    UpgradeCode="A2C6A8B4-FE32-412A-AB0C-1C39C99C1111">
+
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perUser" />
+
+    <MediaTemplate />
+
+    <Feature Id="MainFeature" Title="Platform Engineer Toolkit" Level="1">
+      <ComponentGroupRef Id="ToolkitComponents" />
+      <ComponentGroupRef Id="ShortcutComponents" />
+    </Feature>
+
+    <CustomActionRef Id="RunToolkitAfterInstall" />
+
+  </Product>
+</Wix>

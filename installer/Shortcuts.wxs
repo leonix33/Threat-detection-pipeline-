@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Fragment>
+    <ComponentGroup Id="ShortcutComponents">
+      <Component Id="StartMenuShortcut" Directory="ApplicationProgramsFolder" Guid="*">
+
+        <Shortcut Id="RunToolkitShortcut"
+                  Name="Platform Engineer Toolkit"
+                  Target="[PLATFORM_TOOLKIT_DIR]run_toolkit.cmd"
+                  WorkingDirectory="PLATFORM_TOOLKIT_DIR"/>
+
+        <RemoveFolder Id="RemoveShortcutFolder"
+                      On="uninstall"/>
+
+        <RegistryValue Root="HKCU" Key="Software\PlatformEngineerToolkit"
+                       Name="installed" Type="integer"
+                       Value="1" KeyPath="yes"/>
+
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>

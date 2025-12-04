@@ -1,0 +1,72 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., 1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+    
+    - name: Download WiX Toolset
+      run: |
+        $wixUrl = "https://github.com/wixtoolset/wix3/releases/download/wix3141rtm/wix314-binaries.zip"
+        $wixZip = "$env:TEMP\wix-binaries.zip"
+        $wixDir = "$env:GITHUB_WORKSPACE\wix-tools"
+        
+        Write-Host "Downloading WiX Toolset..."
+        Invoke-WebRequest -Uri $wixUrl -OutFile $wixZip
+        
+        Write-Host "Extracting WiX..."
+        Expand-Archive -Path $wixZip -DestinationPath $wixDir -Force
+        
+        Write-Host "Adding WiX to PATH..."
+        echo "$wixDir" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      shell: pwsh
+    
+    - name: Build MSI
+      run: |
+        cd installer
+        msbuild PlatformToolkit.wixproj /p:Configuration=Release /p:Platform=x86
+      shell: cmd
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ github.event.inputs.version }}
+        name: Platform Engineer Toolkit v${{ github.event.inputs.version }}
+        body: |
+          ## Platform Engineer Toolkit v${{ github.event.inputs.version }}
+          
+          ### Installation
+          1. Download `PlatformEngineerToolkit_v1.0.0.msi`
+          2. Run the installer
+          3. Launch from Start Menu: **Platform Engineer Toolkit**
+          
+          ### Included Tools
+          - Python 3.14.0
+          - Git 2.52.0
+          - Azure CLI 2.80.0
+          - Terraform 1.14.0
+          - Databricks CLI 0.278.0
+          
+          ### Requirements
+          - Windows 10/11
+          - No admin rights required (installs to user profile)
+        files: |
+          installer/bin/Release/PlatformEngineerToolkit_v1.0.0.msi
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

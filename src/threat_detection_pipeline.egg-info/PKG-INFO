@@ -1,0 +1,195 @@
+Metadata-Version: 2.4
+Name: threat-detection-pipeline
+Version: 1.0.0
+Summary: A Python-based threat intelligence ETL pipeline for STIX/TAXII indicators
+Author-email: leonix <leonix23@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/yourusername/threat-detection-pipeline
+Project-URL: Documentation, https://github.com/yourusername/threat-detection-pipeline#readme
+Project-URL: Repository, https://github.com/yourusername/threat-detection-pipeline
+Project-URL: Bug Tracker, https://github.com/yourusername/threat-detection-pipeline/issues
+Keywords: threat-intelligence,stix,taxii,cybersecurity,etl
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Security
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.28.0
+Requires-Dist: click>=8.1.0
+Requires-Dist: stix2>=3.0.0
+Requires-Dist: cabby>=0.1.0
+Requires-Dist: pandas>=1.5.0
+Requires-Dist: sqlalchemy>=2.0.0
+Requires-Dist: pydantic>=1.10.0
+Requires-Dist: python-dotenv>=0.19.0
+Requires-Dist: rich>=12.0.0
+Requires-Dist: aiohttp>=3.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: isort>=5.10.0; extra == "dev"
+Requires-Dist: flake8>=5.0.0; extra == "dev"
+Requires-Dist: mypy>=0.991; extra == "dev"
+Requires-Dist: pre-commit>=2.20.0; extra == "dev"
+
+# Threat Intelligence ETL Pipeline
+
+A Python-based threat intelligence ETL pipeline that ingests STIX/TAXII indicators from various threat feeds, normalizes and enriches threat intelligence data, stores processed indicators for analysis, and provides a lightweight CLI for analysts to fetch, search, and export IOCs.
+
+## Features
+
+- **STIX/TAXII Integration**: Ingest threat intelligence from multiple TAXII feeds
+- **Data Normalization**: Standardize indicators across different sources
+- **Data Enrichment**: Add context and metadata to threat indicators
+- **Storage**: Persistent storage for processed indicators
+- **CLI Interface**: User-friendly command-line interface for analysts
+- **Daily Analysis**: Automated workflows for regular threat intelligence processing
+
+## Installation
+
+### Prerequisites
+- Python 3.8 or higher
+- pip package manager
+
+### Setup
+
+1. Clone the repository:
+```bash
+git clone https://github.com/leonix/threat-detection-pipeline.git
+cd threat-detection-pipeline
+```
+
+2. Create and activate virtual environment:
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On macOS/Linux
+# or
+.venv\Scripts\activate  # On Windows
+```
+
+3. Install dependencies:
+```bash
+pip install -e .
+```
+
+## Usage
+
+### CLI Commands
+
+#### Fetch Threat Intelligence Data
+```bash
+threat-intel fetch --source all
+threat-intel fetch --source misp --days 7
+```
+
+#### Search for IOCs
+```bash
+threat-intel search --ioc-type ip --value 192.168.1.1
+threat-intel search --hash md5:d41d8cd98f00b204e9800998ecf8427e
+```
+
+#### Export Results
+```bash
+threat-intel export --format json --output threats.json
+threat-intel export --format csv --output threats.csv
+```
+
+#### Run Analysis
+```bash
+threat-intel analyze --daily
+threat-intel analyze --custom --config config/analysis.yml
+```
+
+### Configuration
+
+Create a configuration file at `config/sources.yml`:
+```yaml
+taxii_feeds:
+  - name: "MISP"
+    url: "https://misp.example.com/taxii2"
+    username: "your_username"
+    password: "your_password"
+  
+  - name: "OTX"
+    url: "https://otx.alienvault.com/taxii"
+    api_key: "your_api_key"
+
+storage:
+  type: "sqlite"
+  path: "threat_intel.db"
+
+enrichment:
+  enabled: true
+  sources:
+    - virustotal
+    - shodan
+```
+
+## Architecture
+
+The pipeline follows a standard ETL pattern:
+
+1. **Extract**: Fetch data from TAXII feeds and threat intelligence sources
+2. **Transform**: Normalize and enrich the threat data
+3. **Load**: Store processed indicators in the database
+
+## Development
+
+### Project Structure
+```
+threat-detection-pipeline/
+├── src/threat_intel/       # Main package
+│   ├── cli.py             # Command-line interface
+│   ├── fetch.py           # Data extraction
+│   ├── normalize.py       # Data transformation
+│   ├── store.py           # Data storage
+│   └── analysis.py        # Analysis functions
+├── config/                # Configuration files
+├── tests/                 # Unit tests
+├── diagrams/              # Architecture diagrams
+└── runbook/               # Operations documentation
+```
+
+### Running Tests
+```bash
+pytest tests/
+```
+
+### Code Formatting
+```bash
+black src/ tests/
+isort src/ tests/
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass
+6. Submit a pull request
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Security Considerations
+
+- Never commit API keys or credentials to version control
+- Use environment variables for sensitive configuration
+- Validate all external input data
+- Implement proper error handling for network operations
+
+## Support
+
+For issues and questions, please open an issue on GitHub or contact leonix23@gmail.com.

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Fragment>
+    <ComponentGroup Id="ToolkitComponents" Directory="PLATFORM_TOOLKIT_DIR">
+
+      <Component Id="platform_toolkit_ps1" Guid="*">
+        <File Id="platform_toolkit_ps1" Name="platform_toolkit.ps1"
+              Source="$(var.RuntimeDir)\platform_toolkit.ps1" />
+      </Component>
+
+      <Component Id="update_toolkit_ps1" Guid="*">
+        <File Id="update_toolkit_ps1" Name="update_toolkit.ps1"
+              Source="$(var.RuntimeDir)\update_toolkit.ps1" />
+      </Component>
+
+      <Component Id="uninstall_toolkit_ps1" Guid="*">
+        <File Id="uninstall_toolkit_ps1" Name="uninstall_toolkit.ps1"
+              Source="$(var.RuntimeDir)\uninstall_toolkit.ps1" />
+      </Component>
+
+      <Component Id="run_toolkit_cmd" Guid="*">
+        <File Id="run_toolkit_cmd" Name="run_toolkit.cmd"
+              Source="$(var.RuntimeDir)\run_toolkit.cmd" />
+      </Component>
+
+      <Component Id="config_json" Guid="*">
+        <File Id="config_json" Name="config.json"
+              Source="$(var.RuntimeDir)\config.json" />
+      </Component>
+
+      <Component Id="version_json" Guid="*">
+        <File Id="version_json" Name="version.json"
+              Source="$(var.RuntimeDir)\version.json" />
+      </Component>
+
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>

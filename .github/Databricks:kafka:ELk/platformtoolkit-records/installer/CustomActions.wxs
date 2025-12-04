@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Fragment>
+    <CustomAction 
+        Id="RunToolkitAfterInstall"
+        FileKey="run_toolkit_cmd"
+        ExeCommand=""
+        Return="asyncNoWait"
+        Execute="deferred"
+        Impersonate="yes" />
+
+    <InstallExecuteSequence>
+      <Custom Action="RunToolkitAfterInstall" After="InstallFinalize">NOT Installed</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+</Wix>

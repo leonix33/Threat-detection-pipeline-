@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "autoUpdate": true,
+  "checkUpdateOnStartup": true,
+  "tools": {
+    "python": true,
+    "git": true,
+    "azureCli": true,
+    "terraform": true,
+    "databricks": true
+  }
+}

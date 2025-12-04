@@ -1,0 +1,22 @@
+# Build outputs
+installer/bin/
+installer/obj/
+*.msi
+*.wixpdb
+
+# WiX tools (portable)
+wix-tools/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Version summary
+version_summary.json
+
+# Windows
+Thumbs.db
+Desktop.ini
