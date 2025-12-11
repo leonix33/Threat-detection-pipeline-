@@ -56,7 +56,7 @@ resource "databricks_cluster_policy" "cost_control" {
   definition = jsonencode({
     "node_type_id": {
       "type": "allowlist",
-      "values": ["n1-standard-4", "n1-highmem-2", "n1-highmem-4"]
+      "values": ["n1-standard-4", "n1-standard-8", "n1-highmem-2", "n1-highmem-4", "n1-highmem-8"]
     },
     "autotermination_minutes": {
       "type": "range",
@@ -119,6 +119,52 @@ resource "databricks_cluster" "ml_cluster" {
     "spark.databricks.cluster.profile" = "serverless"
     "spark.sql.adaptive.enabled" = "true"
     "spark.databricks.delta.preview.enabled" = "true"
+  }
+
+  policy_id = databricks_cluster_policy.cost_control.id
+
+  depends_on = [databricks_workspace.main]
+}
+
+# Databricks cluster for Data Engineering workloads
+resource "databricks_cluster" "data_engineering_cluster" {
+  cluster_name            = "Data Engineering Cluster"
+  node_type_id           = "n1-standard-8"
+  driver_node_type_id    = "n1-standard-8"
+  autotermination_minutes = var.auto_termination_minutes
+  
+  autoscale {
+    min_workers = 2
+    max_workers = 10
+  }
+  
+  spark_version = "13.3.x-scala2.12"
+  
+  spark_conf = {
+    "spark.databricks.cluster.profile" = "serverless"
+    "spark.databricks.repl.allowedLanguages" = "python,sql,scala"
+    "spark.sql.adaptive.enabled" = "true"
+    "spark.sql.adaptive.coalescePartitions.enabled" = "true"
+    "spark.sql.adaptive.skewJoin.enabled" = "true"
+    "spark.sql.adaptive.localShuffleReader.enabled" = "true"
+    "spark.databricks.delta.optimizeWrite.enabled" = "true"
+    "spark.databricks.delta.autoCompact.enabled" = "true"
+    "spark.databricks.io.cache.enabled" = "true"
+    "spark.sql.streaming.stateStore.providerClass" = "com.databricks.sql.streaming.state.RocksDBStateStoreProvider"
+    "spark.databricks.streaming.statefulOperator.useStrictDistribution" = "true"
+  }
+
+  init_scripts {
+    workspace {
+      destination = "/Shared/init-scripts/data-engineering-init.sh"
+    }
+  }
+
+  custom_tags = {
+    "Environment" = var.environment
+    "Team" = "DataEngineering"
+    "CostCenter" = "Analytics"
+    "Purpose" = "ETL-Processing"
   }
 
   policy_id = databricks_cluster_policy.cost_control.id

@@ -129,3 +129,34 @@ variable "auto_termination_minutes" {
   type        = number
   default     = 30
 }
+
+# Data Engineering Cluster Configuration
+variable "data_engineering_cluster_name" {
+  description = "Name for the data engineering cluster"
+  type        = string
+  default     = "Data Engineering Cluster"
+}
+
+variable "data_engineering_node_type" {
+  description = "Node type for data engineering cluster"
+  type        = string
+  default     = "n1-standard-8"
+}
+
+variable "data_engineering_min_workers" {
+  description = "Minimum number of workers for data engineering cluster"
+  type        = number
+  default     = 2
+}
+
+variable "data_engineering_max_workers" {
+  description = "Maximum number of workers for data engineering cluster"
+  type        = number
+  default     = 10
+}
+
+variable "data_engineering_spark_version" {
+  description = "Spark version for data engineering cluster"
+  type        = string
+  default     = "13.3.x-scala2.12"
+}
