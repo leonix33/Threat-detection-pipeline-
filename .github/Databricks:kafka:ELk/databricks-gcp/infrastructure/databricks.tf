@@ -24,30 +24,8 @@ resource "google_project_iam_member" "databricks_bigquery_admin" {
   member  = "serviceAccount:${google_service_account.databricks_sa.email}"
 }
 
-# Databricks workspace
-resource "databricks_workspace" "main" {
-  workspace_name = "${var.databricks_workspace_name}-${local.name_suffix}"
-  deployment_name = "databricks-${local.name_suffix}"
-  
-  gcp_managed_network_config {
-    gke_cluster_pod_ip_range     = "10.1.0.0/16"
-    gke_cluster_service_ip_range = "10.2.0.0/20"
-    subnet_cidr                  = var.private_subnet_cidr
-  }
-
-  gke_config {
-    connectivity_type = "PRIVATE_NODE_PUBLIC_MASTER"
-    master_ip_range   = "10.3.0.0/28"
-  }
-
-  network_id = google_compute_network.databricks_vpc.id
-  
-  depends_on = [
-    google_service_account.databricks_sa,
-    google_compute_network.databricks_vpc,
-    google_compute_subnetwork.private_subnet
-  ]
-}
+# Databricks workspace will be created manually or via GCP console
+# The clusters and resources below will be applied to the existing workspace
 
 # Databricks cluster policy for cost control
 resource "databricks_cluster_policy" "cost_control" {
@@ -71,8 +49,6 @@ resource "databricks_cluster_policy" "cost_control" {
       "value": var.enable_preemptible_instances
     }
   })
-
-  depends_on = [databricks_workspace.main]
 }
 
 # Databricks cluster for general analytics
@@ -97,8 +73,6 @@ resource "databricks_cluster" "analytics_cluster" {
   }
 
   policy_id = databricks_cluster_policy.cost_control.id
-
-  depends_on = [databricks_workspace.main]
 }
 
 # Databricks cluster for ML workloads
@@ -122,8 +96,6 @@ resource "databricks_cluster" "ml_cluster" {
   }
 
   policy_id = databricks_cluster_policy.cost_control.id
-
-  depends_on = [databricks_workspace.main]
 }
 
 # Databricks cluster for Data Engineering workloads
@@ -169,7 +141,6 @@ resource "databricks_cluster" "data_engineering_cluster" {
 
   policy_id = databricks_cluster_policy.cost_control.id
 
-  depends_on = [databricks_workspace.main]
 }
 
 # Databricks SQL warehouse
@@ -185,34 +156,26 @@ resource "databricks_sql_endpoint" "analytics_warehouse" {
       value = var.environment
     }
   }
-
-  depends_on = [databricks_workspace.main]
 }
 
 # Create workspace folders
 resource "databricks_directory" "shared_analytics" {
   path = "/Shared/Analytics"
-
-  depends_on = [databricks_workspace.main]
 }
 
 resource "databricks_directory" "shared_ml" {
   path = "/Shared/ML"
 
-  depends_on = [databricks_workspace.main]
 }
 
 resource "databricks_directory" "shared_pipelines" {
   path = "/Shared/Pipelines"
 
-  depends_on = [databricks_workspace.main]
 }
 
 # Secret scope for storing credentials
 resource "databricks_secret_scope" "main" {
   name = "main-secrets"
-
-  depends_on = [databricks_workspace.main]
 }
 
 # Store GCS credentials in secret scope

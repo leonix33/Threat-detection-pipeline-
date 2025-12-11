@@ -137,7 +137,7 @@ resource "google_monitoring_alert_policy" "high_cpu" {
     condition_threshold {
       filter          = "resource.type=\"gce_instance\" AND metadata.user_labels.\"cluster-name\"=~\"databricks-.*\""
       duration        = "300s"
-      comparison      = "COMPARISON_GREATER_THAN"
+      comparison      = "COMPARISON_GT"
       threshold_value = 85
 
       aggregations {
@@ -170,7 +170,7 @@ resource "google_monitoring_alert_policy" "failed_jobs" {
     condition_threshold {
       filter          = "resource.type=\"databricks_job\" AND metric.label.status=\"FAILED\""
       duration        = "300s"
-      comparison      = "COMPARISON_GREATER_THAN"
+      comparison      = "COMPARISON_GT"
       threshold_value = 0
 
       aggregations {
@@ -195,12 +195,12 @@ resource "google_cloudfunctions_function" "metrics_collector" {
   available_memory_mb   = 256
   source_archive_bucket = google_storage_bucket.databricks_artifacts.name
   source_archive_object = "metrics-collector.zip"
-  trigger {
-    event_trigger {
-      event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
-      resource   = google_pubsub_topic.metrics_topic[0].name
-    }
+  
+  event_trigger {
+    event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
+    resource   = google_pubsub_topic.metrics_topic[0].name
   }
+  
   timeout               = 60
   entry_point          = "collect_metrics"
   service_account_email = google_service_account.databricks_sa.email

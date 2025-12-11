@@ -1,0 +1,32 @@
+# GCP Project Configuration
+project_id = "your-gcp-project-id"
+region     = "us-central1"
+zone       = "us-central1-a"
+environment = "dev"
+
+# Databricks Configuration
+databricks_account_id = "your-databricks-account-id"
+databricks_workspace_name = "data-engineering-workspace"
+
+# Storage Configuration
+data_lake_bucket_name = "databricks-datalake-dev"
+warehouse_dataset_name = "analytics_warehouse"
+
+# Network Configuration
+vpc_cidr = "10.0.0.0/16"
+public_subnet_cidr = "10.0.1.0/24"
+private_subnet_cidr = "10.0.2.0/24"
+
+# Cluster Configuration
+cluster_node_type = "n1-standard-4"
+cluster_min_workers = 1
+cluster_max_workers = 8
+auto_termination_minutes = 30
+
+# Cost Optimization
+enable_preemptible_instances = true
+
+# Data Engineering Cluster Configuration
+data_engineering_node_type = "n1-standard-8"
+data_engineering_min_workers = 2
+data_engineering_max_workers = 10

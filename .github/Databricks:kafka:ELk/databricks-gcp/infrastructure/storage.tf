@@ -177,7 +177,7 @@ resource "google_secret_manager_secret" "hive_password" {
   secret_id = "databricks-hive-password-${local.name_suffix}"
 
   replication {
-    automatic = true
+    auto {}
   }
 
   labels = local.common_tags

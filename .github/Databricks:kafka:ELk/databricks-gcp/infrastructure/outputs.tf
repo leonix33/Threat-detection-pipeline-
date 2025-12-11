@@ -67,19 +67,19 @@ output "bigquery_processed_dataset" {
 
 # Databricks outputs
 output "databricks_workspace_url" {
-  description = "Databricks Workspace URL"
-  value       = databricks_workspace.main.workspace_url
+  description = "Databricks Workspace URL - to be set manually after workspace creation"
+  value       = "https://your-workspace.cloud.databricks.com"
   sensitive   = true
 }
 
 output "databricks_workspace_id" {
-  description = "Databricks Workspace ID"
-  value       = databricks_workspace.main.workspace_id
+  description = "Databricks Workspace ID - to be set manually after workspace creation"
+  value       = "your-workspace-id"
 }
 
 output "databricks_workspace_name" {
   description = "Databricks Workspace Name"
-  value       = databricks_workspace.main.workspace_name
+  value       = var.databricks_workspace_name
 }
 
 output "analytics_cluster_id" {
@@ -148,7 +148,7 @@ output "environment_summary" {
     environment           = var.environment
     project_id           = var.project_id
     region               = var.region
-    workspace_name       = databricks_workspace.main.workspace_name
+    workspace_name       = var.databricks_workspace_name
     data_lake_bucket     = google_storage_bucket.data_lake.name
     monitoring_enabled   = var.enable_monitoring
     preemptible_enabled  = var.enable_preemptible_instances
@@ -160,7 +160,7 @@ output "environment_summary" {
 output "resource_urls" {
   description = "Quick access URLs for resources"
   value = {
-    databricks_workspace = databricks_workspace.main.workspace_url
+    databricks_workspace = "https://your-workspace.cloud.databricks.com"
     cloud_console       = "https://console.cloud.google.com/home/dashboard?project=${var.project_id}"
     storage_browser     = "https://console.cloud.google.com/storage/browser/${google_storage_bucket.data_lake.name}?project=${var.project_id}"
     bigquery_console    = "https://console.cloud.google.com/bigquery?project=${var.project_id}"
