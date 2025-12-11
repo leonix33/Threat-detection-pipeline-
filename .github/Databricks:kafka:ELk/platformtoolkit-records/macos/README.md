@@ -2,7 +2,7 @@
 
 A comprehensive toolkit for platform engineers on macOS that automates the installation and management of essential development tools using Homebrew and other native package managers.
 
-## 🚀 Features
+## Features
 
 - **Multiple Package Manager Support**: Homebrew, Conda, NVM, pyenv, and more
 - **Comprehensive Tool Installation**: Python, Git, Azure CLI, Terraform, Databricks CLI, Docker, Kubernetes tools, and utilities
@@ -12,7 +12,7 @@ A comprehensive toolkit for platform engineers on macOS that automates the insta
 - **Logging & Dry-run Support**: Safe preview and detailed logging options
 - **User-Level Installation**: No admin/sudo rights required for most tools
 
-## 📦 What Gets Installed
+## What Gets Installed
 
 ### Package Managers
 - **Homebrew** - Primary package manager for macOS
@@ -100,7 +100,7 @@ chmod +x *.sh scripts/*.sh
 - **Homebrew**: `/opt/homebrew` (Apple Silicon) or `/usr/local` (Intel)
 - **Applications**: `/Applications/`
 
-## 🎯 Usage
+## Usage
 
 ### Main Commands
 ```bash
@@ -135,7 +135,7 @@ chmod +x *.sh scripts/*.sh
 ./uninstall_toolkit.sh
 ```
 
-## 🔧 Configuration
+## Configuration
 
 The toolkit behavior can be customized via `runtime/config.json`:
 
@@ -206,7 +206,7 @@ The uninstall process:
 - Offers to clean shell configuration
 - Creates backups of modified configuration files
 
-## 📊 Version Tracking
+## Version Tracking
 
 The toolkit maintains a detailed version summary at `~/Tools/version_summary.json`:
 
@@ -226,7 +226,7 @@ The toolkit maintains a detailed version summary at `~/Tools/version_summary.jso
 }
 ```
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -305,7 +305,7 @@ Modify `runtime/config.json` to enable/disable specific tools before installatio
 echo 'export PATH="$HOME/Tools/bin:$PATH"' >> ~/.zshrc
 ```
 
-## 📚 Dependencies
+## Dependencies
 
 ### System Requirements
 - macOS 10.15+ (Catalina or later)
@@ -317,7 +317,7 @@ echo 'export PATH="$HOME/Tools/bin:$PATH"' >> ~/.zshrc
 - Admin rights (for some applications)
 - Apple Developer Account (for signed applications)
 
-## 🤝 Contributing
+## Contributing
 
 To contribute to the macOS Platform Toolkit:
 
@@ -340,11 +340,11 @@ To contribute to the macOS Platform Toolkit:
 cat runtime/config.json
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Homebrew](https://brew.sh/) - The missing package manager for macOS
 - [Oh My Zsh](https://ohmyz.sh/) - Framework for Zsh configuration
@@ -353,4 +353,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-**Platform Toolkit for macOS** - Streamlining development environment setup on macOS! 🚀
+**Platform Toolkit for macOS** - Streamlining development environment setup on macOS!
