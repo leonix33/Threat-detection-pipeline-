@@ -47,6 +47,11 @@ resource "databricks_cluster" "data_engineering_cluster" {
     "spark.sql.adaptive.coalescePartitions.enabled" = "true"
     "spark.databricks.delta.optimizeWrite.enabled" = "true"
     "spark.databricks.delta.autoCompact.enabled" = "true"
+    # Kafka and streaming configurations
+    "spark.sql.streaming.metricsEnabled" = "true"
+    "spark.sql.streaming.ui.enabled" = "true"
+    "spark.databricks.streaming.statefulOperator.asyncCheckpoint.enabled" = "true"
+    "spark.sql.streaming.kafka.useDeprecatedOffsetFetching" = "false"
   }
 
   custom_tags = {

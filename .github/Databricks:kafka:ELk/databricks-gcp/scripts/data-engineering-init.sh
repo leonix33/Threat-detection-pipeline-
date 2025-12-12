@@ -19,8 +19,11 @@ echo "Starting Data Engineering cluster initialization..."
     sqlalchemy==2.0.23 \
     psycopg2-binary==2.9.9 \
     confluent-kafka==2.3.0 \
+    google-cloud-pubsub==2.18.4 \
     google-cloud-storage==2.10.0 \
-    google-cloud-bigquery==3.13.0
+    google-cloud-bigquery==3.13.0 \
+    kafka-python==2.0.2 \
+    avro-python3==1.11.3
 
 # Install DBT profiles directory
 mkdir -p /home/ubuntu/.dbt
