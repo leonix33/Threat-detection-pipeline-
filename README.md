@@ -2,7 +2,7 @@
 
 A comprehensive, cross-platform toolkit for platform engineers that automates the installation and management of essential development tools.
 
-## 🌟 Features
+##  Features
 
 - **Cross-Platform Support**: Windows (PowerShell + MSI) and macOS (Bash + Homebrew)
 - **Automated Tool Management**: Installs and updates 25+ development tools
@@ -12,7 +12,7 @@ A comprehensive, cross-platform toolkit for platform engineers that automates th
 - **Verification System**: Comprehensive installation verification
 - **Professional Documentation**: Complete setup and usage guides
 
-## 🚀 Platform Support
+##  Platform Support
 
 ### Windows
 - **MSI Installer**: Easy installation via Windows Installer package
@@ -26,7 +26,7 @@ A comprehensive, cross-platform toolkit for platform engineers that automates th
 - **Multiple Package Managers**: Homebrew, Conda, NVM, pyenv support
 - **Branch**: `macos-version`
 
-## 📦 Installation
+##  Installation
 
 ### Windows
 
@@ -114,7 +114,7 @@ Search for "Platform Engineer Toolkit"
 ./run_toolkit.sh help
 ```
 
-## 📍 Installation Locations
+##  Installation Locations
 
 ### Windows
 ```
@@ -128,7 +128,7 @@ Search for "Platform Engineer Toolkit"
 /opt/homebrew/ (Apple Silicon) or /usr/local/ (Intel)  # Homebrew
 ```
 
-## 🏗 Building from Source
+##  Building from Source
 
 ### Windows
 See the main branch documentation for WiX installer build instructions.
@@ -142,7 +142,7 @@ chmod +x *.sh scripts/*.sh
 ./run_toolkit.sh install
 ```
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 plaformToolkit/
@@ -170,7 +170,7 @@ Edit `runtime/config.json` to enable/disable:
 - Tool categories (core, utilities, applications)
 - Shell enhancements (Oh My Zsh, aliases)
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 ### Windows
 - Ensure PowerShell execution policy allows scripts
@@ -182,7 +182,7 @@ Edit `runtime/config.json` to enable/disable:
 - For permission issues: `sudo chown -R $(whoami) $(brew --prefix)/*`
 - Restart terminal after installation: `source ~/.zshrc`
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create feature branch for appropriate platform:
@@ -195,11 +195,11 @@ Edit `runtime/config.json` to enable/disable:
 
 MIT License - see LICENSE file for details.
 
-## 👨‍💻 Author
+##  Author
 
 **leonix** - Platform Engineering Enthusiast
 
-## 🆘 Support
+## Support
 
 For issues and questions, please open an issue on the [GitHub repository](https://github.com/leonix33/plaformToolkit/issues).
 
